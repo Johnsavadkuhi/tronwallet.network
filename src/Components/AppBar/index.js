@@ -10,19 +10,22 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import {fade} from '@material-ui/core/styles/colorManipulator';
 import {withStyles} from '@material-ui/core/styles';
-// import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/SearchOutlined';
-import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
-import HomeIcon from '@material-ui/icons/HomeOutlined';
-import WalletIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
-import RTL from '@material-ui/icons/FormatTextdirectionRToL';
-import AddIcon from '@material-ui/icons/AddOutlined';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import {Tooltip} from "@material-ui/core";
 import {setLanguage} from "../../Redux/actions";
 import {compose} from "recompose";
 import {connect} from "react-redux";
 import {tu} from "../../Utils/i18n";
 import {Link} from "react-router-dom";
+// import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/SearchOutlined';
+import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
+import HomeIcon from '@material-ui/icons/HomeOutlined';
+import WalletIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
+import AddIcon from '@material-ui/icons/AddOutlined';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import UnlockIcon from '@material-ui/icons/LockOpenOutlined'
+import RTLIcon from '@material-ui/icons/FormatTextdirectionRToLOutlined';
+import LTRIcon from '@material-ui/icons/FormatTextdirectionLToROutlined'
 
 const styles = theme => ({
     root: {
@@ -94,6 +97,12 @@ const styles = theme => ({
             display: 'none',
         },
     },
+    lightTooltip: {
+        backgroundColor: theme.palette.common.white,
+        color: 'rgba(0, 0, 0, 0.87)',
+        boxShadow: theme.shadows[1],
+        fontSize: 14,
+    }
 });
 
 class PrimarySearchAppBar extends React.Component {
@@ -207,7 +216,12 @@ class PrimarySearchAppBar extends React.Component {
                     </Link>
                     <p>{tu('AddWallet')}</p>
                 </MenuItem>
-
+                <MenuItem onClick={this.handleProfileMenuOpen}>
+                    <IconButton color="inherit">
+                        <UnlockIcon/>
+                    </IconButton>
+                    <p>{tu('unlockComponent')}</p>
+                </MenuItem>
                 <MenuItem onClick={this.handleProfileMenuOpen}>
                     <IconButton color="inherit">
                         <LanguageOutlinedIcon/>
@@ -252,24 +266,39 @@ class PrimarySearchAppBar extends React.Component {
                                 aria-haspopup="true"
                                 onClick={this.handleProfileMenuOpen}
                                 color="inherit">
-                                <LanguageOutlinedIcon/>
+                                <Tooltip title={tu("language")} classes={{ tooltip: classes.lightTooltip }}>
 
+                                <LanguageOutlinedIcon/>
+                                </Tooltip>
                             </IconButton>
 
                             <Link to={"/Wallets"} style={{color: '#fff'}}>
                                 <IconButton color="inherit">
                                     <Badge badgeContent={0} color="secondary">
+                                        <Tooltip title={tu("Wallets")} classes={{ tooltip: classes.lightTooltip }}>
                                         <WalletIcon/>
+                                        </Tooltip>
                                     </Badge>
 
 
                                 </IconButton>
                             </Link>
 
-                            <Link to={"/AddWallet"} style={{color: '#fff'}}>
+                            <Link style={{color: '#fff'}} to={"/Unlock"}>
+                                <IconButton color="inherit">
+                                    <Tooltip title={tu("UnlockWallet")} classes={{ tooltip: classes.lightTooltip }}>
+
+                                    <UnlockIcon/>
+                                    </Tooltip>
+                                </IconButton>
+
+                            </Link>
+                            <Link to={"/Create"} style={{color: '#fff'}}>
                                 <IconButton color="inherit">
                                     <Badge badgeContent={0} color="secondary">
+                                       <Tooltip title={tu("CreateWallet")} classes={{ tooltip: classes.lightTooltip }}>
                                         <AddIcon/>
+                                       </Tooltip>
 
                                     </Badge>
 
@@ -277,17 +306,29 @@ class PrimarySearchAppBar extends React.Component {
                             </Link>
 
                             <IconButton onClick={this.props.onDirection} color="inherit">
-                                <RTL/>
+
+                                {
+                                    this.props.direction === false ?
+                                    <Tooltip title={tu('RTL')}  classes={{ tooltip: classes.lightTooltip }}>
+                                        <RTLIcon/>
+                                    </Tooltip>
+                                    : <Tooltip title={tu('LTR')}  classes={{ tooltip: classes.lightTooltip }}>
+                                        <LTRIcon/>
+                                    </Tooltip>
+                                }
                             </IconButton>
 
                             <Link style={{color: '#fff'}} to={"/Home"}>
                                 <IconButton color="inherit">
+                                    <Tooltip title={tu('Home')} classes={{ tooltip: classes.lightTooltip }}>
 
                                     <HomeIcon/>
+                                    </Tooltip>
 
                                 </IconButton>
 
                             </Link>
+
 
                         </div>
 
