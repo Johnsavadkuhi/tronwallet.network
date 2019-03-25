@@ -1,18 +1,22 @@
 import React, {useState} from 'react';
-import AppBar from "./Components/AppBar/AppBar";
+import AppBar from "./Components/AppBar";
 import RTL from "./Utils/Direction/RTL";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import Home from "./Pages/Home";
 import Wallets from "./Pages/Wallets";
-import AddWallet from "./Pages/AddWallet";
+import Create from "./Pages/Create";
+import Unlock from "./Pages/Unlock";
 import {IntlProvider} from "react-intl";
 import {setLanguage} from "./Redux/actions";
 import {connect} from "react-redux";
 import {languages} from "./Translations";
 
 const theme = createMuiTheme({
+    typography: {
+        useNextVariants: true,
+    },
     direction: 'rtl', // Both here and <body dir="rtl">
 });
 const App = (props) => {
@@ -31,11 +35,13 @@ const App = (props) => {
 
                         <AppBar onDirection={() => {
                             setRtl(!rtl)
-                        }}/>
+                        }} direction={rtl}/>
 
                         <Route exact path={"/"} component={Home}/>
                         <Route path={"/Wallets"} component={Wallets}/>
-                        <Route path={"AddWallet"} component={AddWallet}/>
+                        <Route path={"/Create"} component={Create}/>
+                        <Route path={"/_Unlock"} component={Unlock}/>
+
 
                     </Router>
 
@@ -58,11 +64,12 @@ const App = (props) => {
 
                             <AppBar onDirection={() => {
                                 setRtl(!rtl)
-                            }}/>
+                            }} direction={rtl}/>
 
                             <Route exact path={"/"} component={Home}/>
                             <Route path={"/Wallets"} component={Wallets}/>
-                            <Route path={"AddWallet"} component={AddWallet}/>
+                            <Route path={"/Create"} component={Create}/>
+                            <Route path={"/_Unlock"} component={Unlock}/>
 
                         </Router>
 
