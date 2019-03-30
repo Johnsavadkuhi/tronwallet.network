@@ -1,9 +1,17 @@
+import React from "react";
+
 export const messages = {
 
 'TronWallet':'TronWallet',
     'Home':'Home',
-    'AddWallet':'Add Wallet',
+    'AddWallet':'AddWallet Wallet',
     'Wallets' : 'Wallets',
-    'language':'language'
+    'language':'language',
+    'CreateWallet':'Create Wallet' ,
+    'UnlockWallet':'unlockComponent Wallet',
+    'RTL':'Right to Left',
+    'LTR':'Left to Right',
+    'CreateNewAccount' :'Create New Account',
+    'ChecktheAddress':'Check the Address :'
 
 };
