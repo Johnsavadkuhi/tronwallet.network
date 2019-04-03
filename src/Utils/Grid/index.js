@@ -15,11 +15,8 @@ const styles = theme => ({
         maxWidth: 600,
         margin: `${theme.spacing.unit}px auto`,
         padding: theme.spacing.unit * 2,
-        boxShadow: 'rgb(228, 228, 228) 0px 0px 10p'
-
     },
-    cardclass: {
-    }
+
 
 });
 

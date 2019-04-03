@@ -10,6 +10,8 @@ export const messages = {
     'RTL':'راست به چپ',
     'LTR':'چپ به راست',
     'CreateNewAccount' :'ایجاد کیف پول جدید ',
-    'ChecktheAddress':'آدرس بررسی شود : '
-
+    'ChecktheAddress':'آدرس بررسی شود : ',
+    'e8characters':'حداقل ۸ کاراکتر وارد کنید.',
+    'password':'رمز',
+    'repeatPassword':'تکرار رمز'
 };

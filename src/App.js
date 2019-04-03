@@ -12,6 +12,7 @@ import {IntlProvider} from "react-intl";
 import {setLanguage} from "./Redux/actions";
 import {connect} from "react-redux";
 import {languages} from "./Translations";
+import {ErrorBoundary} from "./Components/ErrorBoundary";
 
 const theme = createMuiTheme({
     typography: {
@@ -28,25 +29,26 @@ const App = (props) => {
 
         return (<>
 
-                <IntlProvider  locale={props.activeLanguage}
-                               messages={languages[props.activeLanguage]}>
+                <ErrorBoundary>
+                    <IntlProvider locale={props.activeLanguage}
+                                  messages={languages[props.activeLanguage]}>
 
-                    <Router>
+                        <Router>
 
-                        <AppBar onDirection={() => {
-                            setRtl(!rtl)
-                        }} direction={rtl}/>
+                            <AppBar onDirection={() => {
+                                setRtl(!rtl)
+                            }} direction={rtl}/>
 
-                        <Route exact path={"/"} component={Home}/>
-                        <Route path={"/Wallets"} component={Wallets}/>
-                        <Route path={"/Create"} component={Create}/>
-                        <Route path={"/_Unlock"} component={Unlock}/>
+                            <Route exact path={"/"} component={Home}/>
+                            <Route path={"/Wallets"} component={Wallets}/>
+                            <Route path={"/Create"} component={Create}/>
+                            <Route path={"/_Unlock"} component={Unlock}/>
 
 
-                    </Router>
+                        </Router>
 
-                </IntlProvider>
-
+                    </IntlProvider>
+                </ErrorBoundary>
 
             </>
         )
@@ -55,8 +57,8 @@ const App = (props) => {
         document.getElementById('body').setAttribute('dir', 'rtl');
 
         return (<>
-            <IntlProvider  locale={props.activeLanguage}
-                           messages={languages[props.activeLanguage]}>
+            <IntlProvider locale={props.activeLanguage}
+                          messages={languages[props.activeLanguage]}>
                 <MuiThemeProvider theme={theme}>
 
                     <RTL>
@@ -82,6 +84,7 @@ const App = (props) => {
 
 
 };
+
 function mapStateToProps(state) {
 
     return {

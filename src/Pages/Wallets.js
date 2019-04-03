@@ -1,15 +1,13 @@
 import React from 'react';
-import Wallet from '../Components/Wallet'
+import {Vote} from "../Components/Vote";
 
 function Wallets(props) {
 
     return (
         <div>
-            <Wallet />
+            <Vote />
         </div>
     );
 }
-
-
 
 export default (Wallets);
