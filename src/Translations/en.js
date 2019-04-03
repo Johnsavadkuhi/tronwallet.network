@@ -11,6 +11,9 @@ export const messages = {
     'RTL':'Right to Left',
     'LTR':'Left to Right',
     'CreateNewAccount' :'Create New Account',
-    'ChecktheAddress':'Check the Address :'
+    'ChecktheAddress':'Check the Address :',
+    'e8characters':'Enter at least 8 characters.',
+    'password':'Password',
+    'repeatPassword':'Repeat Password'
 
 };

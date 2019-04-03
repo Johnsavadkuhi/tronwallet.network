@@ -3,15 +3,11 @@ import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import WeakIcon from '@material-ui/icons/HdrWeak';
-
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from "@material-ui/core/FormControl";
+import {tu} from "../../Utils/i18n";
 
 const styles = {
     root: {
@@ -45,6 +41,8 @@ function CustomizedInputBase(props) {
     const { classes } = props;
     const [password , setPassword] = useState() ;
     const [showPassword, setShowPassword] = useState(false);
+    const farsi = tu(props.placeHolder);
+    console.log(farsi);
 
     return (
 
@@ -67,9 +65,6 @@ function CustomizedInputBase(props) {
             />
 
         </Paper>
-
-
-
 
     );
 }
