@@ -41,9 +41,6 @@ function CustomizedInputBase(props) {
     const { classes } = props;
     const [password , setPassword] = useState() ;
     const [showPassword, setShowPassword] = useState(false);
-    const farsi = tu(props.placeHolder);
-    console.log(farsi);
-
     return (
 
 
