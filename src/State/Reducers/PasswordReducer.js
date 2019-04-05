@@ -4,7 +4,7 @@ const initialState ={
     repeatPassword: ''
 };
 
-export  function Password (state=initialState , action ) {
+export default  function PasswordReducer (state=initialState , action ) {
 
     console.log("State : " , state) ;
     switch (action.type) {
