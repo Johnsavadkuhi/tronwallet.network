@@ -5,8 +5,8 @@ import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
 import SaveIcon from '@material-ui/icons/Save';
-import downloadFile from './DownloadFile';
-import Account from './Account';
+import downloadFile from '../../Utils/Download/DownloadFile';
+import Account from './TronAccount';
 import {useStateValue} from "../../State/StateProvider";
 
 const useStyles = makeStyles(theme => ({
