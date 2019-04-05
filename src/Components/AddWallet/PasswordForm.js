@@ -1,11 +1,11 @@
-import React  from 'react'
+import React, {useState} from 'react'
 import {tu} from "../../Utils/i18n";
 import Divider from "@material-ui/core/Divider";
 import CustomizedInputBase from '../Input'
-import CheckIcon from '@material-ui/icons/Check'
 import {withStyles} from "@material-ui/core";
+import {useStateValue} from "../../State/StateProvider";
 
-const styles = theme => ({
+const styles =  theme => ({
     header: {
         textAlign: 'center',
         fontSize: '1.5em',
@@ -28,39 +28,60 @@ const styles = theme => ({
 });
 
 
- const PasswordForm = (props) => {
+const PasswordForm =  (props) => {
 
     const {classes} = props;
-    return ( <>
-        <div className={classes.header}>{tu("CreateNewAccount")}</div>
 
-        <div className={classes.center}>
-            <small>
-                <span className={classes.textMuted}>{tu('ChecktheAddress')}  </span>
-                <span style={{color: '#1ad164'}}>https://</span>
-                <span style={{color: '#d12114'}}>tronwallet.network</span>
-            </small>
-        </div>
-        <br/>
+    const [password  , setPassword] = useState('');
+    const [repeatPassword  , setRepeatPassword] =useState('');
+
+    const [pass , dispatch ] = useStateValue() ;
+    console.clear(pass);
+
+    const handleChangePassword = async ev =>{
+
+          setPassword(ev.target.value);
+
+       await dispatch({type:'password' , 'newPassword':ev.target.value ,  'newRepeatPassword':repeatPassword });
+    };
+    const handleChangeRepeatPassword = async ev =>{
+
+         setRepeatPassword(ev.target.value);
+        await dispatch({type:'password' , 'newPassword':password,  'newRepeatPassword':ev.target.value ,  });
+    };
+
+    return (<>
+
+
+        <div  className={classes.header}>{tu("CreateNewAccount")}</div>
+
+
         <Divider variant="middle" light={true}/>
 
 
-        <p className={classes.textMuted}>* Enter password to encrypt the private key</p>
+        <small className={classes.textMuted}> Enter password to encrypt the private key</small> <br/><br/>
 
-        <CustomizedInputBase placeHolder={'password'}/>
 
-        <br/>
-        <CustomizedInputBase placeHolder={'Repeat Password'}/>
-        <br/>
+        <CustomizedInputBase name='password' mPassword={password} onChange={handleChangePassword} placeHolder={'password'}/><br/>
+
+
+        <CustomizedInputBase  mPassword={repeatPassword} onChange={handleChangeRepeatPassword} placeHolder={'Repeat Password'}/> <br/>
+
 
         <div>
+
                 <span style={{fontSize: '12px'}} className={classes.textMuted}>
-                    <CheckIcon className={classes.iconSmall}/>
-                    {tu('e8characters')}
+                    {password.length >= 8 ?<li style={{color:'#31a62d'}}>
+                        Ok Password
+                    </li> :<li>
+                        {tu('e8characters')}
+                    </li>}
+
                 </span>
-            <span>   </span>
+
 
         </div>
+
 
     </>)
 
