@@ -17,9 +17,3 @@ export const languages = {
 
 };
 
-export const availableLanguages =  {
-
-    en: "English",
-        fa: "فارسی",
-};
-

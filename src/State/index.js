@@ -1,14 +1,12 @@
-import {App} from "./Reducers/App";
-import {Password} from "./Reducers/Password";
-import {Counter }from "./Reducers/Counter";
+import AppReducer from "./Reducers/AppReducer";
+import PasswordReducer from "./Reducers/PasswordReducer";
 
  const MainReducer = ({app , password ,counter} , action )=>{
 
     return {
 
-        app : App(app , action ),
-        pass : Password(password  , action),
-        counter : Counter(counter , action )
+        app : AppReducer(app , action ),
+        pass : PasswordReducer(password  , action),
     }
 };
 

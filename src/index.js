@@ -14,10 +14,8 @@ const initialState = {
     },
 
     activeLanguage: 'en',
-    counter :0 ,
 
-       password:''  ,
-       repeatPassword: ''
+
 
 };
 
