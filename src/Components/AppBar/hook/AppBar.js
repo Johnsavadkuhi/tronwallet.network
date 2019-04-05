@@ -21,7 +21,8 @@ import LTRIcon from '@material-ui/icons/FormatTextdirectionLToROutlined'
 
 import {Link} from "react-router-dom";
 import {tu} from "../../../Utils/i18n";
-import {availableLanguages} from '../../../Translations/'
+import {useStateValue} from "../../../State/StateProvider";
+//import {availableLanguages} from '../../../Translations/'
 
 const useStyles = makeStyles(theme => ({
     grow: {
@@ -95,7 +96,17 @@ function PrimarySearchAppBar(props) {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    //const [{availableLanguages} , dispatch] = useStateValue();
+    const [{app={
+
+        availableLanguages: {
+            en: "English",
+            fa: "فارسی",
+        },
+
+        activeLanguage: 'en',
+
+
+    }} , dispatch] = useStateValue();
 
     function handleProfileMenuOpen(event) {
         setAnchorEl(event.currentTarget);
@@ -105,9 +116,12 @@ function PrimarySearchAppBar(props) {
         setMobileMoreAnchorEl(null);
     }
 
-    function handleMenuClose() {
+   async function handleMenuClose(e) {
         setAnchorEl(null);
-        handleMobileMenuClose();
+        console.log("lanugaes : "  , app.availableLanguages)
+       //await dispatch({type:'setLanguage'})
+     await  dispatch({type:'setLanguage' , 'language':e})
+       handleMobileMenuClose();
     }
 
     function handleMobileMenuOpen(event) {
@@ -132,7 +146,7 @@ function PrimarySearchAppBar(props) {
             onClose={handleMenuClose}>
 
             {
-                Object.keys(availableLanguages).map((language, index) => (
+                Object.keys(app.availableLanguages).map((language, index) => (
 
                     <MenuItem
                         key={language}
@@ -140,7 +154,7 @@ function PrimarySearchAppBar(props) {
                         onClick={() => {
                             handleMenuClose(language);
                             handleMenuItemClick(this, index)
-                        }}>{availableLanguages[language]}</MenuItem>
+                        }}>{app.availableLanguages[language]}</MenuItem>
                 ))
             }
 

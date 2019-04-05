@@ -21,9 +21,9 @@ const theme = createMuiTheme({
 const App = (props) => {
 
     const [rtl , setRtl] = useState(false);
-     const [{activeLanguage }] = useStateValue();
+     const [{app={'activeLanguage':''}}] = useStateValue();
 
-   console.log('app in app in App.js : ' ,activeLanguage);
+   console.log('app in app in AppReducerReducer.js : ' ,app.activeLanguage);
 
     if (!rtl) {
 
@@ -32,8 +32,8 @@ const App = (props) => {
         return (<>
 
                 <ErrorBoundary>
-                    <IntlProvider locale={activeLanguage}
-                                  messages={languages[activeLanguage]}>
+                    <IntlProvider locale={app.activeLanguage}
+                                  messages={languages[app.activeLanguage]}>
 
 
                         <Router>

@@ -13,7 +13,7 @@ export const messages = {
     'CreateNewAccount' :'Create New Account',
     'ChecktheAddress':'Check the Address :',
     'e8characters':'Enter at least 8 characters.',
-    'password':'Password',
-    'repeatPassword':'Repeat Password'
+    'password':'PasswordReducer',
+    'repeatPassword':'Repeat PasswordReducer'
 
 };
