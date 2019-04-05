@@ -1,15 +1,20 @@
 import React from 'react' ;
-import CreateComponent from '../Components/AddWallet/CreateComponent'
-const Create = props =>{
+import CreateComponent from '../Components/AddWallet/CreateAccount'
 
-    return (<><
-
-        CreateComponent/>
+const Create = props => {
 
 
-        </>)
+    return (<>
+
+
+
+            <CreateComponent/>
+
+
+
+    </>)
 
 
 };
 
-export default  Create ;
+export default Create;

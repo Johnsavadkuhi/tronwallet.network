@@ -16,3 +16,10 @@ export const languages = {
     'fa': messages_fa.messages,
 
 };
+
+export const availableLanguages =  {
+
+    en: "English",
+        fa: "فارسی",
+};
+

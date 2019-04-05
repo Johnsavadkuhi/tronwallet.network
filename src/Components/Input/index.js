@@ -7,7 +7,6 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import {tu} from "../../Utils/i18n";
 
 const styles = {
     root: {
@@ -39,18 +38,19 @@ const styles = {
 
 function CustomizedInputBase(props) {
     const { classes } = props;
-    const [password , setPassword] = useState() ;
     const [showPassword, setShowPassword] = useState(false);
+
+
     return (
-
-
+<>
         <Paper className={classes.root} elevation={1}>
             <InputBase
+                name={props.name}
                         type={showPassword ? 'text' : 'password'}
                         className={classes.input }
-                        value={password}
+                        value={props.mPassword }
                         placeholder={props.placeHolder}
-                        onChange={() =>{setPassword(password)}}
+                        onChange={props.onChange}
                         endAdornment={<InputAdornment position="end">
                             <IconButton style={{color: '#57777d' }}
                                 aria-label="Toggle password visibility"
@@ -62,7 +62,7 @@ function CustomizedInputBase(props) {
             />
 
         </Paper>
-
+</>
     );
 }
 

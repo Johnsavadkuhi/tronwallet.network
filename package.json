@@ -3,23 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^3.9.3",
-    "@material-ui/icons": "^3.0.2",
-    "jss":"^9.8.7",
-    "jss-rtl": "^0.2.3",
-    "lodash": "^4.17.11",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-intl": "^2.8.0",
-    "react-jss": "^8.6.1",
-    "react-redux": "^6.0.1",
-    "react-router-dom": "^5.0.0",
-    "react-scripts": "^2.1.8",
-    "react-virtualized": "^9.21.0",
-    "recompose": "^0.30.0",
-    "redux": "^4.0.1",
-    "@tronscan/client":"^0.2.45"
-
+    "@material-ui/core": "^4.0.0-alpha.6",
+    "@material-ui/icons": "^4.0.0-alpha.1",
+    "@material-ui/styles": "latest",
+    "@tronprotocol/wallet-api": "^0.0.37",
+    "aes-js": "^3.1.2",
+    "clsx": "latest",
+    "jss": "latest",
+    "jss-rtl": "latest",
+    "lodash": "latest",
+    "react": "latest",
+    "react-dom": "^latest",
+    "react-intl": "latest",
+    "react-jss": "latest",
+    "react-router-dom": "latest",
+    "react-scripts": "latest",
+    "react-virtualized": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -35,5 +34,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    
+  }
 }

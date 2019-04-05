@@ -7,7 +7,7 @@ export const messages = {
     'Wallets' : 'Wallets',
     'language':'language',
     'CreateWallet':'Create Wallet' ,
-    'UnlockWallet':'unlockComponent Wallet',
+    'UnlockWallet':'Unlock Wallet',
     'RTL':'Right to Left',
     'LTR':'Left to Right',
     'CreateNewAccount' :'Create New Account',

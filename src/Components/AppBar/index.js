@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {useState} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -11,9 +10,6 @@ import Menu from '@material-ui/core/Menu';
 import {fade} from '@material-ui/core/styles/colorManipulator';
 import {withStyles} from '@material-ui/core/styles';
 import {Tooltip} from "@material-ui/core";
-import {setLanguage} from "../../Redux/actions";
-import {compose} from "recompose";
-import {connect} from "react-redux";
 import {tu} from "../../Utils/i18n";
 import {Link} from "react-router-dom";
 // import MenuIcon from '@material-ui/icons/Menu';
@@ -26,6 +22,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import UnlockIcon from '@material-ui/icons/LockOpenOutlined'
 import RTLIcon from '@material-ui/icons/FormatTextdirectionRToLOutlined';
 import LTRIcon from '@material-ui/icons/FormatTextdirectionLToROutlined'
+import {useStateValue} from "../../State/StateProvider";
 
 const styles = theme => ({
     root: {
@@ -105,268 +102,502 @@ const styles = theme => ({
     }
 });
 
-class PrimarySearchAppBar extends React.Component {
+// class PrimarySearchAppBar extends React.Component {
+//
+//     state = {
+//         anchorEl: null,
+//         mobileMoreAnchorEl: null,
+//         selectedIndex: 0,
+//         RTL: false
+//     };
+//
+//     handleMenuItemClick = (event, index) => {
+//         this.setState({selectedIndex: index, anchorEl: null});
+//     };
+//
+//
+//     handleProfileMenuOpen = event => {
+//         this.setState({anchorEl: event.currentTarget});
+//
+//     };
+//
+//     handleMenuClose = async (e) => {
+//         this.setState({anchorEl: null});
+//         await this.props.setLanguage(e);
+//         this.handleMobileMenuClose();
+//     };
+//
+//     handleMobileMenuOpen = event => {
+//         this.setState({mobileMoreAnchorEl: event.currentTarget});
+//     };
+//
+//     handleMobileMenuClose = () => {
+//         this.setState({mobileMoreAnchorEl: null});
+//     };
+//
+//
+//     render() {
+//         const {anchorEl, mobileMoreAnchorEl} = this.state;
+//         const {classes} = this.props;
+//         const isMenuOpen = Boolean(anchorEl);
+//         const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+//
+//         const renderMenu = (
+//             <Menu
+//
+//                 anchorEl={anchorEl}
+//                 anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+//                 transformOrigin={{vertical: 'top', horizontal: 'right'}}
+//                 open={isMenuOpen}
+//
+//                 onClose={this.handleMenuClose}>
+//
+//                 {
+//                     Object.keys(this.props.languages).map((language, index) => (
+//
+//                         <MenuItem
+//                             key={language}
+//                             selected={index === this.state.selectedIndex}
+//                             onClick={() => {
+//                                 this.handleMenuClose(language);
+//                                 this.handleMenuItemClick(this, index)
+//                             }}>{this.props.languages[language]}</MenuItem>
+//                     ))
+//                 }
+//
+//             </Menu>
+//         );
+//
+//         const renderMobileMenu = (
+//             <Menu
+//
+//                 anchorEl={mobileMoreAnchorEl}
+//                 anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+//                 transformOrigin={{vertical: 'top', horizontal: 'right'}}
+//                 open={isMobileMenuOpen}
+//                 onClose={this.handleMenuClose}
+//             >
+//
+//                 <MenuItem onClick={this.handleMobileMenuClose}>
+//                     <Link to={'/Home'} >
+//                         <IconButton color="inherit">
+//                             <Badge badgeContent={0} color="secondary">
+//                                 <HomeIcon/>
+//                             </Badge>
+//                         </IconButton>
+//                     </Link>
+//                     <p>{tu('Home')}</p>
+//
+//                 </MenuItem>
+//
+//                 <MenuItem onClick={this.handleMobileMenuClose}>
+//                    <Link to={'/Wallets'}>
+//                     <IconButton color="inherit">
+//                         <Badge badgeContent={0} color="secondary">
+//                             <WalletIcon/>
+//                         </Badge>
+//                     </IconButton>
+//                    </Link>
+//                     <p>{tu('Wallets')}</p>
+//
+//                 </MenuItem>
+//
+//                 <MenuItem onClick={this.handleMobileMenuClose}>
+//                     <Link to={'/AddWallets'}>
+//
+//                     <IconButton color="inherit">
+//                         <Badge badgeContent={0} color="secondary">
+//                             <AddIcon/>
+//                         </Badge>
+//                     </IconButton>
+//                     </Link>
+//                     <p>{tu('AddWallet')}</p>
+//                 </MenuItem>
+//                 <MenuItem onClick={this.handleProfileMenuOpen}>
+//                     <IconButton color="inherit">
+//                         <UnlockIcon/>
+//                     </IconButton>
+//                     <p>{tu('unlockComponent')}</p>
+//                 </MenuItem>
+//                 <MenuItem onClick={this.handleProfileMenuOpen}>
+//                     <IconButton color="inherit">
+//                         <LanguageOutlinedIcon/>
+//                     </IconButton>
+//                     <p>{tu('language')}</p>
+//                 </MenuItem>
+//
+//             </Menu>
+//         );
+//
+//        // #2196f3
+//         //#ffc107
+//         return (
+//             <div>
+//                 <AppBar position="static" style={{backgroundColor: '#2196f3', color: '#fff'}}>
+//                     <Toolbar>
+//
+//                         <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
+//                         </IconButton>
+//                         <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+//                             {tu('TronWallet')}
+//
+//                         </Typography>
+//                         <div className={classes.search}>
+//                             <div className={classes.searchIcon}>
+//                                 <SearchIcon/>
+//                             </div>
+//                             <InputBase
+//                                 placeholder="Search…"
+//                                 classes={{
+//                                     root: classes.inputRoot,
+//                                     input: classes.inputInput,
+//                                 }}
+//                             />
+//                         </div>
+//
+//                         <div className={classes.grow}/>
+//                         <div className={classes.sectionDesktop}>
+//
+//                             <IconButton
+//                                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+//                                 aria-haspopup="true"
+//                                 onClick={this.handleProfileMenuOpen}
+//                                 color="inherit">
+//                                 <Tooltip title={tu("language")} classes={{ tooltip: classes.lightTooltip }}>
+//
+//                                 <LanguageOutlinedIcon/>
+//                                 </Tooltip>
+//                             </IconButton>
+//
+//                             <Link to={"/Wallets"} style={{color: '#fff'}}>
+//                                 <IconButton color="inherit">
+//                                     <Badge badgeContent={0} color="secondary">
+//                                         <Tooltip title={tu("Wallets")} classes={{ tooltip: classes.lightTooltip }}>
+//                                         <WalletIcon/>
+//                                         </Tooltip>
+//                                     </Badge>
+//
+//
+//                                 </IconButton>
+//                             </Link>
+//
+//                             <Link style={{color: '#fff'}} to={"/Unlock"}>
+//                                 <IconButton color="inherit">
+//                                     <Tooltip title={tu("UnlockWallet")} classes={{ tooltip: classes.lightTooltip }}>
+//
+//                                     <UnlockIcon/>
+//                                     </Tooltip>
+//                                 </IconButton>
+//
+//                             </Link>
+//                             <Link to={"/Create"} style={{color: '#fff'}}>
+//                                 <IconButton color="inherit">
+//                                     <Badge badgeContent={0} color="secondary">
+//                                        <Tooltip title={tu("CreateWallet")} classes={{ tooltip: classes.lightTooltip }}>
+//                                         <AddIcon/>
+//                                        </Tooltip>
+//
+//                                     </Badge>
+//
+//                                 </IconButton>
+//                             </Link>
+//
+//                             <IconButton onClick={this.props.onDirection} color="inherit">
+//
+//                                 {
+//                                     this.props.direction === false ?
+//                                     <Tooltip title={tu('RTL')}  classes={{ tooltip: classes.lightTooltip }}>
+//                                         <RTLIcon/>
+//                                     </Tooltip>
+//                                     : <Tooltip title={tu('LTR')}  classes={{ tooltip: classes.lightTooltip }}>
+//                                         <LTRIcon/>
+//                                     </Tooltip>
+//                                 }
+//                             </IconButton>
+//
+//                             <Link style={{color: '#fff'}} to={"/Home"}>
+//                                 <IconButton color="inherit">
+//                                     <Tooltip title={tu('Home')} classes={{ tooltip: classes.lightTooltip }}>
+//
+//                                     <HomeIcon/>
+//                                     </Tooltip>
+//
+//                                 </IconButton>
+//
+//                             </Link>
+//
+//
+//                         </div>
+//
+//                         <div className={classes.sectionMobile}>
+//                             <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
+//                                 <MoreIcon/>
+//                             </IconButton>
+//                         </div>
+//                     </Toolbar>
+//                 </AppBar>
+//                 {renderMenu}
+//                 {renderMobileMenu}
+//             </div>
+//         );
+//     }
+// }
+//
+// PrimarySearchAppBar.propTypes = {
+//     classes: PropTypes.object.isRequired,
+// };
 
-    state = {
-        anchorEl: null,
-        mobileMoreAnchorEl: null,
-        selectedIndex: 0,
-        RTL: false
+
+function MyAppBar(props){
+
+    const {classes} = props;
+
+    const [anchorEl , setAnchorEl ] = useState(null);
+    const [mobileMoreAnchorEl , setMobileMoreAnchorEl] = useState(null);
+    const [selectedIndex  , setSelectedIndex] = useState(0);
+
+    const isMenuOpen = Boolean(anchorEl);
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const [{availableLanguages} , dispatch] = useStateValue() ;
+    console.log("app ********** ******* : " , availableLanguages );
+
+
+    const handleMenuItemClick = (event, index) => {
+        // this.setState({selectedIndex: index, anchorEl: null});
+        setSelectedIndex(index);
+        setAnchorEl(null);
+
     };
 
-    handleMenuItemClick = (event, index) => {
-        this.setState({selectedIndex: index, anchorEl: null});
-    };
+    const handleProfileMenuOpen = event => {
+        //this.setState({anchorEl: event.currentTarget});
+        setAnchorEl(event.currentTarget);
 
-
-    handleProfileMenuOpen = event => {
-        this.setState({anchorEl: event.currentTarget});
 
     };
 
-    handleMenuClose = async (e) => {
+    const handleMenuClose = async (e) => {
         this.setState({anchorEl: null});
-        await this.props.setLanguage(e);
-        this.handleMobileMenuClose();
+        //await this.props.setLanguage(e);
+        //this.handleMobileMenuClose();
+
+        setAnchorEl(null);
+        //setLAnauge
+        handleMobileMenuClose() ;
+
     };
 
-    handleMobileMenuOpen = event => {
-        this.setState({mobileMoreAnchorEl: event.currentTarget});
+    const handleMobileMenuOpen = event => {
+        //this.setState({mobileMoreAnchorEl: event.currentTarget});
+        setMobileMoreAnchorEl(event.currentTarget);
+
     };
 
-    handleMobileMenuClose = () => {
-        this.setState({mobileMoreAnchorEl: null});
+    const handleMobileMenuClose = () => {
+        //this.setState({mobileMoreAnchorEl: null});
+        setMobileMoreAnchorEl(null);
     };
 
 
-    render() {
-        const {anchorEl, mobileMoreAnchorEl} = this.state;
-        const {classes} = this.props;
-        const isMenuOpen = Boolean(anchorEl);
-        const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-        const renderMenu = (
-            <Menu
+    const renderMenu = (
+        <Menu
 
-                anchorEl={anchorEl}
-                anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-                transformOrigin={{vertical: 'top', horizontal: 'right'}}
-                open={isMenuOpen}
+            anchorEl={anchorEl}
+            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+            transformOrigin={{vertical: 'top', horizontal: 'right'}}
+             open={isMenuOpen}
 
-                onClose={this.handleMenuClose}>
+            onClose={handleMenuClose}>
 
-                {
-                    Object.keys(this.props.languages).map((language, index) => (
+            {
+                Object.keys(availableLanguages).map((language, index) => (
 
-                        <MenuItem
-                            key={language}
-                            selected={index === this.state.selectedIndex}
-                            onClick={() => {
-                                this.handleMenuClose(language);
-                                this.handleMenuItemClick(this, index)
-                            }}>{this.props.languages[language]}</MenuItem>
-                    ))
-                }
+                    <MenuItem
+                        key={language}
+                        selected={index === selectedIndex}
+                        onClick={() => {
+                            handleMenuClose(language);
+                            handleMenuItemClick(this, index)
+                        }}>{availableLanguages[language]}</MenuItem>
+                ))
+            }
 
-            </Menu>
-        );
+        </Menu>
+    );
 
-        const renderMobileMenu = (
-            <Menu
+    const renderMobileMenu = (
+        <Menu
 
-                anchorEl={mobileMoreAnchorEl}
-                anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-                transformOrigin={{vertical: 'top', horizontal: 'right'}}
-                open={isMobileMenuOpen}
-                onClose={this.handleMenuClose}
-            >
+            anchorEl={mobileMoreAnchorEl}
+            anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+            transformOrigin={{vertical: 'top', horizontal: 'right'}}
+            open={isMobileMenuOpen}
+            onClose={handleMenuClose}
+        >
 
-                <MenuItem onClick={this.handleMobileMenuClose}>
-                    <Link to={'/Home'} >
-                        <IconButton color="inherit">
-                            <Badge badgeContent={0} color="secondary">
-                                <HomeIcon/>
-                            </Badge>
-                        </IconButton>
-                    </Link>
-                    <p>{tu('Home')}</p>
+            <MenuItem onClick={handleMobileMenuClose}>
+                <Link to={'/Home'} >
+                    <IconButton color="inherit">
+                        <Badge badgeContent={0} color="secondary">
+                            <HomeIcon/>
+                        </Badge>
+                    </IconButton>
+                </Link>
+                <p>{tu('Home')}</p>
 
-                </MenuItem>
+            </MenuItem>
 
-                <MenuItem onClick={this.handleMobileMenuClose}>
-                   <Link to={'/Wallets'}>
+            <MenuItem onClick={handleMobileMenuClose}>
+                <Link to={'/Wallets'}>
                     <IconButton color="inherit">
                         <Badge badgeContent={0} color="secondary">
                             <WalletIcon/>
                         </Badge>
                     </IconButton>
-                   </Link>
-                    <p>{tu('Wallets')}</p>
+                </Link>
+                <p>{tu('Wallets')}</p>
 
-                </MenuItem>
+            </MenuItem>
 
-                <MenuItem onClick={this.handleMobileMenuClose}>
-                    <Link to={'/AddWallets'}>
+            <MenuItem onClick={handleMobileMenuClose}>
+                <Link to={'/AddWallets'}>
 
                     <IconButton color="inherit">
                         <Badge badgeContent={0} color="secondary">
                             <AddIcon/>
                         </Badge>
                     </IconButton>
-                    </Link>
-                    <p>{tu('AddWallet')}</p>
-                </MenuItem>
-                <MenuItem onClick={this.handleProfileMenuOpen}>
-                    <IconButton color="inherit">
-                        <UnlockIcon/>
+                </Link>
+                <p>{tu('AddWallet')}</p>
+            </MenuItem>
+            <MenuItem onClick={handleProfileMenuOpen}>
+                <IconButton color="inherit">
+                    <UnlockIcon/>
+                </IconButton>
+                <p>{tu('unlockComponent')}</p>
+            </MenuItem>
+            <MenuItem onClick={handleProfileMenuOpen}>
+                <IconButton color="inherit">
+                    <LanguageOutlinedIcon/>
+                </IconButton>
+                <p>{tu('language')}</p>
+            </MenuItem>
+
+        </Menu>
+    );
+    return (
+        <>
+            <AppBar position="static" style={{backgroundColor: '#2196f3', color: '#fff'}}>
+                <Toolbar>
+
+                    <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
                     </IconButton>
-                    <p>{tu('unlockComponent')}</p>
-                </MenuItem>
-                <MenuItem onClick={this.handleProfileMenuOpen}>
-                    <IconButton color="inherit">
-                        <LanguageOutlinedIcon/>
-                    </IconButton>
-                    <p>{tu('language')}</p>
-                </MenuItem>
+                    <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+                        {tu('TronWallet')}
 
-            </Menu>
-        );
-
-       // #2196f3
-        //#ffc107
-        return (
-            <div>
-                <AppBar position="static" style={{backgroundColor: '#2196f3', color: '#fff'}}>
-                    <Toolbar>
-
-                        <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-                        </IconButton>
-                        <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-                            {tu('TronWallet')}
-
-                        </Typography>
-                        <div className={classes.search}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon/>
-                            </div>
-                            <InputBase
-                                placeholder="Search…"
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput,
-                                }}
-                            />
+                    </Typography>
+                    <div className={classes.search}>
+                        <div className={classes.searchIcon}>
+                            <SearchIcon/>
                         </div>
+                        <InputBase
+                            placeholder="Search…"
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.inputInput,
+                            }}
+                        />
+                    </div>
 
-                        <div className={classes.grow}/>
-                        <div className={classes.sectionDesktop}>
+                    <div className={classes.grow}/>
+                    <div className={classes.sectionDesktop}>
 
-                            <IconButton
-                                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                                aria-haspopup="true"
-                                onClick={this.handleProfileMenuOpen}
-                                color="inherit">
-                                <Tooltip title={tu("language")} classes={{ tooltip: classes.lightTooltip }}>
+                        <IconButton
+                            aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                            aria-haspopup="true"
+                            onClick={handleProfileMenuOpen}
+                            color="inherit">
+                            <Tooltip title={tu("language")} classes={{ tooltip: classes.lightTooltip }}>
 
                                 <LanguageOutlinedIcon/>
+                            </Tooltip>
+                        </IconButton>
+
+                        <Link to={"/Wallets"} style={{color: '#fff'}}>
+                            <IconButton color="inherit">
+                                <Badge badgeContent={0} color="secondary">
+                                    <Tooltip title={tu("Wallets")} classes={{ tooltip: classes.lightTooltip }}>
+                                        <WalletIcon/>
+                                    </Tooltip>
+                                </Badge>
+
+
+                            </IconButton>
+                        </Link>
+
+                        <Link style={{color: '#fff'}} to={"/Unlock"}>
+                            <IconButton color="inherit">
+                                <Tooltip title={tu("UnlockWallet")} classes={{ tooltip: classes.lightTooltip }}>
+
+                                    <UnlockIcon/>
                                 </Tooltip>
                             </IconButton>
 
-                            <Link to={"/Wallets"} style={{color: '#fff'}}>
-                                <IconButton color="inherit">
-                                    <Badge badgeContent={0} color="secondary">
-                                        <Tooltip title={tu("Wallets")} classes={{ tooltip: classes.lightTooltip }}>
-                                        <WalletIcon/>
-                                        </Tooltip>
-                                    </Badge>
-
-
-                                </IconButton>
-                            </Link>
-
-                            <Link style={{color: '#fff'}} to={"/Unlock"}>
-                                <IconButton color="inherit">
-                                    <Tooltip title={tu("UnlockWallet")} classes={{ tooltip: classes.lightTooltip }}>
-
-                                    <UnlockIcon/>
-                                    </Tooltip>
-                                </IconButton>
-
-                            </Link>
-                            <Link to={"/Create"} style={{color: '#fff'}}>
-                                <IconButton color="inherit">
-                                    <Badge badgeContent={0} color="secondary">
-                                       <Tooltip title={tu("CreateWallet")} classes={{ tooltip: classes.lightTooltip }}>
+                        </Link>
+                        <Link to={"/Create"} style={{color: '#fff'}}>
+                            <IconButton color="inherit">
+                                <Badge badgeContent={0} color="secondary">
+                                    <Tooltip title={tu("CreateWallet")} classes={{ tooltip: classes.lightTooltip }}>
                                         <AddIcon/>
-                                       </Tooltip>
+                                    </Tooltip>
 
-                                    </Badge>
+                                </Badge>
 
-                                </IconButton>
-                            </Link>
+                            </IconButton>
+                        </Link>
 
-                            <IconButton onClick={this.props.onDirection} color="inherit">
+                        <IconButton onClick={props.onDirection} color="inherit">
 
-                                {
-                                    this.props.direction === false ?
+                            {
+                                props.direction === false ?
                                     <Tooltip title={tu('RTL')}  classes={{ tooltip: classes.lightTooltip }}>
                                         <RTLIcon/>
                                     </Tooltip>
                                     : <Tooltip title={tu('LTR')}  classes={{ tooltip: classes.lightTooltip }}>
                                         <LTRIcon/>
                                     </Tooltip>
-                                }
-                            </IconButton>
+                            }
+                        </IconButton>
 
-                            <Link style={{color: '#fff'}} to={"/Home"}>
-                                <IconButton color="inherit">
-                                    <Tooltip title={tu('Home')} classes={{ tooltip: classes.lightTooltip }}>
+                        <Link style={{color: '#fff'}} to={"/Home"}>
+                            <IconButton color="inherit">
+                                <Tooltip title={tu('Home')} classes={{ tooltip: classes.lightTooltip }}>
 
                                     <HomeIcon/>
-                                    </Tooltip>
+                                </Tooltip>
 
-                                </IconButton>
-
-                            </Link>
-
-
-                        </div>
-
-                        <div className={classes.sectionMobile}>
-                            <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-                                <MoreIcon/>
                             </IconButton>
-                        </div>
-                    </Toolbar>
-                </AppBar>
-                {renderMenu}
-                {renderMobileMenu}
-            </div>
-        );
-    }
-}
 
-PrimarySearchAppBar.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
+                        </Link>
 
 
-function mapStateToProps(state) {
+                    </div>
 
-    return {
-        activeLanguage: state.app.activeLanguage,
-        languages: state.app.availableLanguages,
-    };
+                    <div className={classes.sectionMobile}>
+                        <IconButton aria-haspopup="true" onClick={handleMobileMenuOpen} color="inherit">
+                            <MoreIcon/>
+                        </IconButton>
+                    </div>
+                </Toolbar>
+            </AppBar>
+            {renderMenu}
+            {renderMobileMenu}
 
-}
-
-const mapDispatchToProps = {
-    setLanguage,
+        </>
+    );
 
 };
 
-
-export default compose(
-    withStyles(styles),
-    connect(mapStateToProps, mapDispatchToProps, null, {pure: false})
-)(PrimarySearchAppBar);
+export default withStyles(MyAppBar)
