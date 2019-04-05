@@ -8,13 +8,13 @@ const styles = theme => ({
     root: {
         flexGrow: 1,
         overflow: 'hidden',
-        padding: `0 ${theme.spacing.unit * 3}px`,
+        padding: theme.spacing(3),
         margin: 10
     },
     paper: {
-        maxWidth: 600,
-        margin: `${theme.spacing.unit}px auto`,
-        padding: theme.spacing.unit * 2,
+        maxWidth: 400,
+        margin: `${theme.spacing(1)}px auto`,
+        padding: theme.spacing(2)
     },
 
 
@@ -28,7 +28,7 @@ function GridWrap(props) {
         <div className={classes.root}>
 
             <Paper className={classes.paper}>
-                <Grid container wrap="nowrap" spacing={24}>
+                <Grid container wrap="nowrap" spacing={1}>
                     <Grid item xs>
                         {props.children}
                     </Grid>

@@ -1,49 +1,51 @@
-import React, {useState} from 'react';
-import AppBar from "./Components/AppBar";
-import RTL from "./Utils/Direction/RTL";
+import React, {lazy, Suspense, useState} from 'react';
+import PrimarySearchAppBar from './Components/AppBar/hook/AppBar'
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import {BrowserRouter as Router, Route} from "react-router-dom";
-import Home from "./Pages/Home";
-import Wallets from "./Pages/Wallets";
-import Create from "./Pages/Create";
-import Unlock from "./Pages/Unlock";
 import {IntlProvider} from "react-intl";
-import {setLanguage} from "./Redux/actions";
-import {connect} from "react-redux";
 import {languages} from "./Translations";
+import {ThemeProvider} from '@material-ui/styles';
 import {ErrorBoundary} from "./Components/ErrorBoundary";
+import {useStateValue} from "./State/StateProvider";
+import {RTL} from "./Utils/Direction/RTL";
+const Home = lazy(() => import ("./Pages/Home" ));
+const Wallets = lazy(() => import( "./Pages/Wallets"));
+const Create = lazy(() => import ("./Pages/Create"));
+const Unlock = lazy(() => import("./Pages/Unlock"));
+
 
 const theme = createMuiTheme({
-    typography: {
-        useNextVariants: true,
-    },
-    direction: 'rtl', // Both here and <body dir="rtl">
+    direction: 'rtl',
 });
+
 const App = (props) => {
 
-    const [rtl, setRtl] = useState(false);
+    const [rtl , setRtl] = useState(false);
+     const [{activeLanguage }] = useStateValue();
+
+   console.log('app in app in App.js : ' ,activeLanguage);
 
     if (!rtl) {
+
         document.getElementById('body').setAttribute('dir', 'ltr');
 
         return (<>
 
                 <ErrorBoundary>
-                    <IntlProvider locale={props.activeLanguage}
-                                  messages={languages[props.activeLanguage]}>
+                    <IntlProvider locale={activeLanguage}
+                                  messages={languages[activeLanguage]}>
+
 
                         <Router>
 
-                            <AppBar onDirection={() => {
-                                setRtl(!rtl)
-                            }} direction={rtl}/>
 
-                            <Route exact path={"/"} component={Home}/>
-                            <Route path={"/Wallets"} component={Wallets}/>
-                            <Route path={"/Create"} component={Create}/>
-                            <Route path={"/_Unlock"} component={Unlock}/>
-
+                                <PrimarySearchAppBar direction={rtl} onDirection={()=>{setRtl(!rtl)}}/>
+                                <Suspense fallback={<div>Loading...</div>}>
+                                    <Route exact path={"/"} component={Home}/>
+                                    <Route path={"/Wallets"} component={Wallets}/>
+                                    <Route path={"/Create"} component={Create}/>
+                                    <Route path={"/_Unlock"} component={Unlock}/>
+                                </Suspense>
 
                         </Router>
 
@@ -57,27 +59,33 @@ const App = (props) => {
         document.getElementById('body').setAttribute('dir', 'rtl');
 
         return (<>
-            <IntlProvider locale={props.activeLanguage}
-                          messages={languages[props.activeLanguage]}>
-                <MuiThemeProvider theme={theme}>
+
+            <IntlProvider locale={'en'}
+                          messages={languages['en']}>
+
+                <ThemeProvider theme={theme}>
 
                     <RTL>
+
                         <Router>
 
-                            <AppBar onDirection={() => {
-                                setRtl(!rtl)
-                            }} direction={rtl}/>
+                            {/*<AppBar onDirection={() => {*/}
+                            {/*setRtl(!rtl)*/}
+                            {/*}} direction={rtl}/>*/}
+
+                            <PrimarySearchAppBar direction={rtl} onDirection={()=>{setRtl(!rtl)}}/>
+
+                            <Suspense fallback={<div>Loading...</div>}>
 
                             <Route exact path={"/"} component={Home}/>
                             <Route path={"/Wallets"} component={Wallets}/>
                             <Route path={"/Create"} component={Create}/>
                             <Route path={"/_Unlock"} component={Unlock}/>
+                            </Suspense>
 
                         </Router>
-
                     </RTL>
-
-                </MuiThemeProvider>
+                </ThemeProvider>
             </IntlProvider>
         </>);
     }
@@ -85,17 +93,5 @@ const App = (props) => {
 
 };
 
-function mapStateToProps(state) {
-
-    return {
-        activeLanguage: state.app.activeLanguage,
-        availableLanguages: state.app.availableLanguages,
-    };
-}
-
-const mapDispatchToProps = {
-    setLanguage
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default (App)
 
