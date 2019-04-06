@@ -6,9 +6,6 @@ const initialState ={
 
 export default  function PasswordReducer (state=initialState , action ) {
 
-
-    console.log("satat in Password Reducer : " , state);
-
     switch (action.type) {
 
         case 'password':

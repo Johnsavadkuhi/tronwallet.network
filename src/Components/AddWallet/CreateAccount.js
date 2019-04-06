@@ -29,10 +29,6 @@ const CreateAccount = props => {
 
     const [{keyStore ={downloaded:false}}] = useStateValue() ;
 
-    const [state ] = useStateValue() ;
-    console.log("keystor downloaded : " , keyStore.downloaded);
-    console.log("Create Account 34 : " , pass);
-
     const passwordIsValid = (!(pass.password === pass.repeatPassword && pass.password.length >= 8));
 
     return (<>

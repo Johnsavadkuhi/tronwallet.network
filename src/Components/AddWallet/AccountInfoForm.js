@@ -3,6 +3,8 @@ import {tu} from "../../Utils/i18n";
 import Divider from "@material-ui/core/Divider";
 import {makeStyles} from '@material-ui/core/styles';
 import {useStateValue} from "../../State/StateProvider";
+import {InputWithCopy} from "../Input";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -26,20 +28,24 @@ const useStyles = makeStyles(theme => ({
         textAlign: 'center'
 
     },
+    right: {
+        textAlign: 'right'
+
+    },
     textMuted: {
         color: '#6c757d !important'
 
     },
-    fontSize : {fontSize:'12px'}
+    fontSize : {fontSize:'12px'},
+
 }));
-
-
 
 const AccountInfoForm = (props) => {
 
     const classes = useStyles();
-    const [{pass}] = useStateValue() ;
-    console.log("Account info form : " , pass);
+    const [states] = useStateValue() ;
+
+
 
     return (<>
 
@@ -48,15 +54,23 @@ const AccountInfoForm = (props) => {
 
         <Divider variant="middle" light={true}/>
 
-
         <small  className={classes.textMuted}> Address and PrivateKey </small> <br/><br/>
 
-        <div className={classes.center}>
+        <div>
+
+            <small className={classes.textMuted} >Address :</small>
+            <InputWithCopy id='myaddress' address={states.account.address} /><br/>
+            <small className={classes.textMuted} >PrivateKey :</small>
+            <InputWithCopy id='myprivateKey' address={states.account.privateKey} /><br/>
+
+            <Button size={'small'} color="primary" className={classes.button}>
+                Account
+            </Button>
 
         </div>
         <div>
             <Divider style={{ marginTop:'10px'}} color={'primary'} variant="middle" light={true}/>
-            <li style={{fontSize:'12px' , marginTop:'5px'}} className={classes.textMuted}> Keep Safe Your Wallet PrivateKey </li>
+            <li style={{fontSize:'12px' , marginTop:'5px'}} className={classes.textMuted}> Keep Safe Your Account PrivateKey </li>
         </div>
 
     </>)
