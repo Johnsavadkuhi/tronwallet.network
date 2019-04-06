@@ -15,8 +15,6 @@ const initialState = {
 
     activeLanguage: 'en',
 
-
-
 };
 
 ReactDOM.render(<StateProvider initialState={initialState} reducer={MainReducer}>

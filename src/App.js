@@ -8,6 +8,7 @@ import {ThemeProvider} from '@material-ui/styles';
 import {ErrorBoundary} from "./Components/ErrorBoundary";
 import {useStateValue} from "./State/StateProvider";
 import {RTL} from "./Utils/Direction/RTL";
+//import Home from "./Pages/Home"
 const Home = lazy(() => import ("./Pages/Home" ));
 const Wallets = lazy(() => import( "./Pages/Wallets"));
 const Create = lazy(() => import ("./Pages/Create"));
@@ -20,10 +21,11 @@ const theme = createMuiTheme({
 
 const App = (props) => {
 
-    const [rtl , setRtl] = useState(false);
-     const [{app={'activeLanguage':''}}] = useStateValue();
+    const [rtl, setRtl] = useState(false);
+    const [{app = {'activeLanguage': ''}}] = useStateValue();
 
-   console.log('app in app in AppReducerReducer.js : ' ,app.activeLanguage);
+    console.log("active language : " , app.activeLanguage);
+
 
     if (!rtl) {
 
@@ -32,20 +34,21 @@ const App = (props) => {
         return (<>
 
                 <ErrorBoundary>
-                    <IntlProvider locale={app.activeLanguage}
-                                  messages={languages[app.activeLanguage]}>
+                    <IntlProvider locale={app.activeLanguage || 'en'}
+                                  messages={languages[app.activeLanguage || 'en']}>
 
 
                         <Router>
+                            <PrimarySearchAppBar direction={rtl} onDirection={() => {
+                                setRtl(!rtl)
+                            }}/>
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Route exact path={"/"} component={Home}/>
+                                <Route path={"/Wallets"} component={Wallets}/>
+                                <Route path={"/Create"} component={Create}/>
+                                <Route path={"/_Unlock"} component={Unlock}/>
 
-
-                                <PrimarySearchAppBar direction={rtl} onDirection={()=>{setRtl(!rtl)}}/>
-                                <Suspense fallback={<div>Loading...</div>}>
-                                    <Route exact path={"/"} component={Home}/>
-                                    <Route path={"/Wallets"} component={Wallets}/>
-                                    <Route path={"/Create"} component={Create}/>
-                                    <Route path={"/_Unlock"} component={Unlock}/>
-                                </Suspense>
+                            </Suspense>
 
                         </Router>
 
@@ -72,15 +75,16 @@ const App = (props) => {
                             {/*<AppBar onDirection={() => {*/}
                             {/*setRtl(!rtl)*/}
                             {/*}} direction={rtl}/>*/}
-
-                            <PrimarySearchAppBar direction={rtl} onDirection={()=>{setRtl(!rtl)}}/>
+                            <PrimarySearchAppBar direction={rtl} onDirection={() => {
+                                setRtl(!rtl)
+                            }}/>
 
                             <Suspense fallback={<div>Loading...</div>}>
 
-                            <Route exact path={"/"} component={Home}/>
-                            <Route path={"/Wallets"} component={Wallets}/>
-                            <Route path={"/Create"} component={Create}/>
-                            <Route path={"/_Unlock"} component={Unlock}/>
+                                <Route exact path={"/"} component={Home}/>
+                                <Route path={"/Wallets"} component={Wallets}/>
+                                <Route path={"/Create"} component={Create}/>
+                                <Route path={"/_Unlock"} component={Unlock}/>
                             </Suspense>
 
                         </Router>
