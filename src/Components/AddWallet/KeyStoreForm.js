@@ -41,16 +41,21 @@ const useStyles = makeStyles(theme => ({
 const KeyStoreForm = (props) => {
 
     const classes = useStyles();
-    const [{pass = {password: ''}}] = useStateValue();
     const [hex, setHex] = useState('');
+    const [{pass = {password: ''}} ] = useStateValue();
 
+    const [{keyStore} , dispatch] = useStateValue() ;
+
+    console.clear(keyStore);
+    console.log("Key Store pass 49 : " , pass);
 
     const handleClick = async () => {
 
         const account = new Account();
         setHex(account.getEncryptedPrivateKey(pass.password));
         await downloadFile(await account.address);
-
+        await  dispatch({type:'downloadKeyStore' , isDownloaded:true});
+        //await  dispatch({'type':'account' , 'address':account.myAddress  , 'privateKey':account.myPrivateKey})
     };
 
     return (<>

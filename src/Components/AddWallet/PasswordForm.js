@@ -34,20 +34,18 @@ const PasswordForm =  (props) => {
 
     const [password  , setPassword] = useState('');
     const [repeatPassword  , setRepeatPassword] =useState('');
-
     const [pass , dispatch ] = useStateValue() ;
-    console.clear(pass);
 
     const handleChangePassword = async ev =>{
 
           setPassword(ev.target.value);
 
-       await dispatch({type:'password' , 'newPassword':ev.target.value ,  'newRepeatPassword':repeatPassword });
+       await dispatch({'type':'password' , 'newPassword':ev.target.value ,  'newRepeatPassword':repeatPassword });
     };
     const handleChangeRepeatPassword = async ev =>{
 
          setRepeatPassword(ev.target.value);
-        await dispatch({type:'password' , 'newPassword':password,  'newRepeatPassword':ev.target.value ,  });
+        await dispatch({type:'password' , newPassword:password,  newRepeatPassword:ev.target.value});
     };
 
     return (<>

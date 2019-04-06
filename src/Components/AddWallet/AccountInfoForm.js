@@ -2,6 +2,7 @@ import React from 'react'
 import {tu} from "../../Utils/i18n";
 import Divider from "@material-ui/core/Divider";
 import {makeStyles} from '@material-ui/core/styles';
+import {useStateValue} from "../../State/StateProvider";
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -37,6 +38,8 @@ const useStyles = makeStyles(theme => ({
 const AccountInfoForm = (props) => {
 
     const classes = useStyles();
+    const [{pass}] = useStateValue() ;
+    console.log("Account info form : " , pass);
 
     return (<>
 
