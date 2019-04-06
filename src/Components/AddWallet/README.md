@@ -12,7 +12,7 @@ the password is used to encrypt the Wallet privateKey
 
 ###KeyStoreForm : 
 
-this component provides a form to download keyStore file , the keyStore file 
+this component provides a form to download keyStore file
 
 
 
