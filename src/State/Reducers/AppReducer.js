@@ -11,8 +11,6 @@ const initialState = {
 
 export default function AppReducer(state=initialState  , action) {
 
-    console.log("app state : " , state);
-
     switch (action.type) {
 
         case 'setLanguage': {

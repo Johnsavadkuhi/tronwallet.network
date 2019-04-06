@@ -47,7 +47,6 @@ const KeyStoreForm = (props) => {
     const [{keyStore} , dispatch] = useStateValue() ;
 
     console.clear(keyStore);
-    console.log("Key Store pass 49 : " , pass);
 
     const handleClick = async () => {
 
@@ -55,7 +54,7 @@ const KeyStoreForm = (props) => {
         setHex(account.getEncryptedPrivateKey(pass.password));
         await downloadFile(await account.address);
         await  dispatch({type:'downloadKeyStore' , isDownloaded:true});
-        //await  dispatch({'type':'account' , 'address':account.myAddress  , 'privateKey':account.myPrivateKey})
+        await  dispatch({'type':'account' , 'address':account.myAddress  , 'privateKey':account.myPrivateKey})
     };
 
     return (<>
