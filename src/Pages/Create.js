@@ -6,11 +6,7 @@ const Create = props => {
 
     return (<>
 
-
-
             <CreateComponent/>
-
-
 
     </>)
 
