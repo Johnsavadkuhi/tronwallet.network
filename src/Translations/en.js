@@ -1,7 +1,7 @@
 
 export const messages = {
 
-'TronWallet':'TronWallet',
+'TronWallet':'Tron Wallet',
     'Home':'Home',
     'AddWallet':'AddWallet Wallet',
     'Wallets' : 'Wallets',
