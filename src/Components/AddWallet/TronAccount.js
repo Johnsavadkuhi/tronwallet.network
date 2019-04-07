@@ -32,6 +32,11 @@ export default class TronAccount {
        return  encryptPrivateKey(encryptKey(Buffer.from(password)), this.myPrivateKey).hex
     }
 
+    clear ()
+    {
+        this.myPrivateKey='';
+
+    }
 }
 
 

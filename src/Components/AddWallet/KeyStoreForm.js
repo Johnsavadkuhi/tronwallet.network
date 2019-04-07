@@ -51,11 +51,15 @@ const KeyStoreForm = (props) => {
     const handleClick = async () => {
 
         const account = new Account();
-        setHex(account.getEncryptedPrivateKey(pass.password));
+        await setHex(account.getEncryptedPrivateKey(pass.password));
         await downloadFile(await account.address);
         await  dispatch({type:'downloadKeyStore' , isDownloaded:true});
-        await  dispatch({'type':'account' , 'address':account.myAddress  , 'privateKey':account.myPrivateKey})
+        await  dispatch({'type':'account' , 'address':account.myAddress  , 'privateKey':account.myPrivateKey});
+        await localStorage.setItem(account.myAddress ,account.getEncryptedPrivateKey(pass.password) ) ;
+
+        setHex('');
     };
+
 
     return (<>
 

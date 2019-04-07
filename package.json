@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.0.0-alpha.6",
     "@material-ui/icons": "^4.0.0-alpha.1",
-    "@material-ui/styles": "latest",
+    "@material-ui/styles": "^3.0.0-alpha.10",
     "@tronprotocol/wallet-api": "^0.0.37",
     "aes-js": "^3.1.2",
     "clsx": "latest",
