@@ -2,7 +2,7 @@ import React, {lazy, Suspense} from 'react'
 import GridWrap from '../../Utils/Grid'
 import {useStateValue} from "../../State/StateProvider";
 import logo from "../../Images/mainLogo.png";
-import {makeStyles , useTheme} from "@material-ui/core/styles";
+import {makeStyles, useTheme} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 //import AccountInfoForm from "./AccountInfoForm";
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
@@ -107,12 +107,7 @@ const CreateAccount = props => {
 
                     </Button> :
 
-                        <Button size="small" >
-
-                            <WalletIcon onClick={()=>{console.log('xxx')}} />
-
-                        </Button>
-
+                            <a href={'/Wallets'}><WalletIcon />  </a>
                 }
                 backButton={
 

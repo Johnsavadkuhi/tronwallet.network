@@ -1,11 +1,11 @@
 import React from 'react';
-import {Vote} from "../Components/Vote";
+import Account from "../Components/Wallet";
 
 function Wallets(props) {
 
     return (
         <div>
-            <Vote />
+       <Account/>
         </div>
     );
 }

@@ -1,25 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
-import classnames from 'classnames';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import red from '@material-ui/core/colors/red';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import TransactionsIcon from '@material-ui/icons/SwapHoriz'
-import AssetIcon from '@material-ui/icons/WebAsset'
-import VoteIcon from '@material-ui/icons/AllInclusive'
+import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import SendIcon from '@material-ui/icons/SendRounded';
-import Tooltip from '@material-ui/core/Tooltip';
+import SendIcon from '@material-ui/icons/SendOutlined';
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
     card: {
-        maxWidth: 600,
+        maxWidth: 400,
     },
     media: {
         height: 0,
@@ -40,89 +37,68 @@ const styles = theme => ({
     },
     avatar: {
         backgroundColor: red[500],
+        fontSize:'16px'
     },
-});
+}));
 
-class Wallet extends React.Component {
+function Account() {
+    const classes = useStyles();
+    const [expanded, setExpanded] = React.useState(false);
 
-    state = { expanded: false };
+    function handleExpandClick() {
+        setExpanded(!expanded);
+    }
 
-    handleExpandClick = () => {
-        this.setState(state => ({ expanded: !state.expanded }));
-    };
+    return (
+        <Card className={classes.card}>
+            <CardHeader
+                avatar={
+                    <Avatar  aria-label="TRX" className={classes.avatar}>
+                        TRX
+                    </Avatar>
+                }
+                action={
+                    <>
+                    <IconButton>
 
-    render() {
-        const { classes } = this.props;
-
-        return (
-            <Card className={classes.card}>
-                <CardHeader
-                    avatar={
-                        <Avatar aria-label="Recipe" className={classes.avatar}>
-                            <small>Trx</small>
-                        </Avatar>
-                    }
-                    action={ <>
-                        <Tooltip title="Send">
+                    </IconButton>
                         <IconButton>
-                        <SendIcon  nativeColor={"green"}/>
+                            <SendIcon />
                         </IconButton>
-                        </Tooltip>
-
-                    </>
+                </>
                     }
-                    title="Wallet Name"
-                    subheader="Price"
-               />
+                title="Account1"
+                subheader="Balance"
+            />
 
-
+            <CardContent>
+                hello
+            </CardContent>
+            <CardActions className={classes.actions} disableActionSpacing>
+                <IconButton aria-label="Add to favorites">
+                    <FavoriteIcon />
+                </IconButton>
+                <IconButton aria-label="Share">
+                    <ShareIcon />
+                </IconButton>
+                <IconButton
+                    className={clsx(classes.expand, {
+                        [classes.expandOpen]: expanded,
+                    })}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="Show more"
+                >
+                    <ExpandMoreIcon />
+                </IconButton>
+            </CardActions>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
 
-
-
                 </CardContent>
-
-                <CardActions className={classes.actions} disableActionSpacing>
-                    <IconButton aria-label="Add to favorites">
-                        <FavoriteIcon />
-                    </IconButton>
-                    <IconButton aria-label="Share">
-                        <TransactionsIcon />
-                    </IconButton>
-                    <IconButton aria-label="Share">
-                        <AssetIcon />
-                    </IconButton>
-                    <IconButton aria-label="Share">
-                        <VoteIcon />
-                    </IconButton>
-
-                    <IconButton
-                        className={classnames(classes.expand, {
-                            [classes.expandOpen]: this.state.expanded,
-                        })}
-                        onClick={this.handleExpandClick}
-                        aria-expanded={this.state.expanded}
-                        aria-label="Show more">
-
-                        <ExpandMoreIcon />
-                    </IconButton>
-
-                </CardActions>
-
-                {/*<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>*/}
-
-                    {/*<CardContent>*/}
-                        {/*<Typography paragraph>Method:</Typography>*/}
-
-                    {/*</CardContent>*/}
-                {/*</Collapse>*/}
-            </Card>
-        );
-    }
+            </Collapse>
+        </Card>
+    );
 }
 
-Wallet.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(Wallet);
+export default Account;
