@@ -9,14 +9,11 @@
     "@tronprotocol/wallet-api": "^0.0.37",
     "aes-js": "^3.1.2",
     "clsx": "latest",
-    "jss": "latest",
-    "jss-rtl": "latest",
     "lodash": "latest",
-    "react": "latest",
-    "react-dom": "^latest",
     "react-intl": "latest",
-    "react-jss": "latest",
     "react-router-dom": "latest",
+    "react": "latest",
+    "react-dom": "latest",
     "react-scripts": "latest"
   },
   "scripts": {

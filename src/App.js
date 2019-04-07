@@ -65,7 +65,6 @@ const App = (props) => {
                           messages={languages[app.activeLanguage || 'en']}>
 
 
-
                 <ThemeProvider theme={theme}>
 
 
