@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import MobileStepper from "@material-ui/core/MobileStepper";
+import WalletIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
 
 const PasswordForm = lazy(() => import ("./PasswordForm"));
 const KeyStoreForm = lazy(() => import ("./KeyStoreForm"));
@@ -98,12 +99,20 @@ const CreateAccount = props => {
                 variant="text"
                 activeStep={activeStep}
                 nextButton={
+                    activeStep <=1 ?
                     <Button size="small" onClick={handleNext} disabled={handleDisabled() }>
 
                         Next
                         {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
 
-                    </Button>
+                    </Button> :
+
+                        <Button size="small" >
+
+                            <WalletIcon onClick={()=>{console.log('xxx')}} />
+
+                        </Button>
+
                 }
                 backButton={
 
