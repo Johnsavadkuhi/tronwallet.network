@@ -6,7 +6,7 @@ import { StylesProvider, jssPreset } from '@material-ui/styles';
 // Configure JSS
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
-export function RTL(props) {
+export default function RTL(props) {
     return (
         <StylesProvider jss={jss}>
             {props.children}

@@ -4,7 +4,6 @@ import Divider from "@material-ui/core/Divider";
 import {makeStyles} from '@material-ui/core/styles';
 import {useStateValue} from "../../State/StateProvider";
 import {InputWithCopy} from "../Input";
-import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
     button: {
@@ -49,7 +48,7 @@ const AccountInfoForm = (props) => {
 
     return (<>
 
-        <div className={classes.header}>{tu("Account Info ")}</div>
+        <div className={classes.header}>{tu("Copy Account Info ")}</div>
 
 
         <Divider variant="middle" light={true}/>
@@ -63,14 +62,13 @@ const AccountInfoForm = (props) => {
             <small className={classes.textMuted} >PrivateKey :</small>
             <InputWithCopy id='myprivateKey' address={states.account.privateKey} /><br/>
 
-            <Button size={'small'} color="primary" className={classes.button}>
-                Account
-            </Button>
-
         </div>
+
         <div>
             <Divider style={{ marginTop:'10px'}} color={'primary'} variant="middle" light={true}/>
-            <li style={{fontSize:'12px' , marginTop:'5px'}} className={classes.textMuted}> Keep Safe Your Account PrivateKey </li>
+
+           <li style={{fontSize:'12px' , marginTop:'5px'}} className={classes.textMuted}> Keep Safe Your Account PrivateKey </li>
+
         </div>
 
     </>)
