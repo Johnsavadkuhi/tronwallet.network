@@ -22,11 +22,17 @@ import LTRIcon from '@material-ui/icons/FormatTextdirectionLToROutlined'
 import {Link} from "react-router-dom";
 import {tu} from "../../../Utils/i18n";
 import {useStateValue} from "../../../State/StateProvider";
+// import logo from '../../../Images/mainLogo.png'
 //import {availableLanguages} from '../../../Translations/'
 
 const useStyles = makeStyles(theme => ({
     grow: {
         flexGrow: 1,
+
+    },
+    buttonBlue: {
+        background: 'linear-gradient(45deg, #2196f3 60%, #21cbf3 80%)',
+        boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .30)',
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -118,9 +124,9 @@ function PrimarySearchAppBar(props) {
 
    async function handleMenuClose(e) {
         setAnchorEl(null);
-        console.log("lanugaes : "  , app.availableLanguages)
+        console.log("lanugaes : "  , app.availableLanguages);
        //await dispatch({type:'setLanguage'})
-     await  dispatch({type:'setLanguage' , 'language':e})
+     await  dispatch({type:'setLanguage' , 'language':e});
        handleMobileMenuClose();
     }
 
@@ -224,18 +230,19 @@ function PrimarySearchAppBar(props) {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static">
+            <AppBar position="static" className={classes.buttonBlue}>
                 <Toolbar>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="Open drawer"
-                    >
-                    </IconButton>
+                    {/*<IconButton*/}
+                        {/*edge="start"*/}
+                        {/*className={classes.menuButton}*/}
+                        {/*color="inherit"*/}
+                        {/*aria-label="Open drawer"*/}
+                    {/*>*/}
+                    {/*</IconButton>*/}
                     <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                         {tu('TronWallet')}
                     </Typography>
+                    {/*<img src={logo} width={'140px'}/>*/}
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
