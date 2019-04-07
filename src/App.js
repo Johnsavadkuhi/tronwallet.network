@@ -7,7 +7,6 @@ import {IntlProvider} from "react-intl";
 import {languages} from "./Translations";
 import {ErrorBoundary} from "./Components/ErrorBoundary";
 import {useStateValue} from "./State/StateProvider";
-import RTL from './Utils/Direction/RTL'
 
 const Home = lazy(() => import ("./Pages/Home" ));
 const Wallets = lazy(() => import( "./Pages/Wallets"));
@@ -65,10 +64,9 @@ const App = (props) => {
             <IntlProvider locale={app.activeLanguage || 'en'}
                           messages={languages[app.activeLanguage || 'en']}>
 
-                <RTL>
+
 
                 <ThemeProvider theme={theme}>
-
 
 
                         <Router>
@@ -90,7 +88,7 @@ const App = (props) => {
 
                         </Router>
                 </ThemeProvider>
-                </RTL>
+
             </IntlProvider>
         </>);
     }
