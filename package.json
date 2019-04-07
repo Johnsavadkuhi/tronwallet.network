@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.0.0-alpha.6",
     "@material-ui/icons": "^4.0.0-alpha.1",
-    "@material-ui/styles": "^3.0.0-alpha.10",
+    "@material-ui/styles": "^4.0.0-alpha.6",
     "@tronprotocol/wallet-api": "^0.0.37",
     "aes-js": "^3.1.2",
     "clsx": "latest",
@@ -17,8 +17,7 @@
     "react-intl": "latest",
     "react-jss": "latest",
     "react-router-dom": "latest",
-    "react-scripts": "latest",
-    "react-virtualized": "latest"
+    "react-scripts": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
